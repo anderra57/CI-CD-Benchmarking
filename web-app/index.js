@@ -6,6 +6,7 @@ const app = express();
 app.set("view engine", "ejs");
 
 app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 // Connect to MongoDB
 mongoose
@@ -23,48 +24,50 @@ app.get("/", (req, res) => {
 
 // POST METHOD //
 app.post("/item/add", (req, res) => {
+  console.log(req.body.name);
   const newItem = new Item({
     name: req.body.name,
     message: req.body.message,
   });
-
   newItem.save().then((item) => res.redirect("/"));
 });
 
 // DELETE METHOD //
 app.delete("/item/delete", (req, res) => {
-  console.log ("Función de eliminación");
-    Item.remove({
-        name: req.body.name
-    }, function(err) {
-        if (err) return handleError(err);
-        
-    });
-        res.sen
-         res.send ("Elemento eliminado con  éxito!");
+  console.log("Función de eliminación");
+
+  Item.remove(
+    {
+      name: req.body.name,
+    },
+    function (err) {
+      if (err) return handleError(err);
+    }
+  );
+
+  res.send("Elemento eliminado con  éxito!");
 });
 
 // PUT METHOD //
+
 app.put("/item/put", (req, res) => {
-  const item = new Item({
-    name: req.body.name,
-    message: req.body.message,
-  });
-  
-  Item.updateOne({message: req.body.message}, item).then(
-    () => {
-      res.status(204).json({
-        message: 'Thing updated successfully!'
-      });
+  Item.findOneAndUpdate(
+    { name: req.body.name },
+    {
+        $set: {
+            name: req.body.name,
+            message: req.body.message
+        }
+    },
+    {
+        upsert: true
     }
-  ).catch(
-    (error) => {
-      res.status(400).json({
-        error: error
-      });
-    }
-  );
+).then(result => { res.status(204).json('Updated') })
+    .catch(error => console.error(error))
 });
+
 const port = 3000;
 
-app.listen(port, () => console.log("Server running..."));
+app.listen(port, () => {
+  console.log(`Server express escuchando en http://localhost:${port}`);
+});
