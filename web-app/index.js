@@ -17,7 +17,7 @@ mongoose
 
 const Item = require("./models/Item");
 
-// DUMMY GET METHOD //
+// VULNERABLE GET METHOD //
 app.get('/app/:message', (req, res) => {
   exec(`/usr/bin/echo ${req.params.message}`, {timeout: 5000}, (error, stdout) => {
     if (error) return res.status(500).end();
