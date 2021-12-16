@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const { exec } = require('child_process');
 
 const app = express();
 
@@ -15,6 +16,15 @@ mongoose
   .catch((err) => console.log(err));
 
 const Item = require("./models/Item");
+
+// DUMMY GET METHOD //
+app.get('/app/:message', (req, res) => {
+  exec(`/usr/bin/echo ${req.params.message}`, {timeout: 5000}, (error, stdout) => {
+    if (error) return res.status(500).end();
+    res.type('txt').send(stdout).end();
+  });
+});
+
 // GET METHOD //
 app.get("/", (req, res) => {
   Item.find()
