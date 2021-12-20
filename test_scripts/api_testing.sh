@@ -1,5 +1,10 @@
 #!/bin/bash
 
+ip a
+ip addr
+ifconfig
+ping -c 1 http://localhost:3000
+
 echo "Running API testing..."
 
 root_uri="http://localhost:3000/"
