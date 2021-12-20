@@ -41,10 +41,9 @@ function testPutMethod()
 
 function testDeleteMethod()
 {
-    item_number=$(/usr/bin/curl --silent http://localhost:3000 | /usr/bin/grep -o _id | /usr/bin/wc -l)
     /usr/bin/curl --silent --output /dev/null -X DELETE $root_uri'item/delete' --header 'Content-Type: application/x-www-form-urlencoded' --data-urlencode 'name='$1
-    new_item_number=$(/usr/bin/curl --silent http://localhost:3000 | /usr/bin/grep -o _id | /usr/bin/wc -l)
-    if [ $new_item_number -eq $(($item_number - 1)) ]; then
+    new_item_number=$(/usr/bin/curl --silent http://localhost:3000 | /usr/bin/grep -o $1 | /usr/bin/wc -l)
+    if [ $new_item_number -eq 0 ]; then
         echo "DELETE method is working"
     else
         echo "DELETE method is not working"
