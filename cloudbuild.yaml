@@ -11,7 +11,7 @@ steps:
     ls
 
 - name: 'docker/compose:1.19.0'
-  args: ['-f', 'CI-CD-Benchmarking/web-app/docker-compose.yml', 'up', '-d']
+  args: ['-f', 'CI-CD-Benchmarking/web-app/docker-compose.yml', 'up']
 
 - name: 'gcr.io/cloud-builders/git'
   entrypoint: /bin/sh
