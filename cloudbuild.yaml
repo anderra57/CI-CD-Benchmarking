@@ -8,7 +8,7 @@ steps:
     git clone https://github.com/alvarohernandezrad/CI-CD-Benchmarking
     
 - name: 'docker/compose:1.19.0'
-  args: ['-f', 'CI-CD-Benchmarking/web-app/docker-compose.yml', 'up']
+  args: ['-f', 'CI-CD-Benchmarking/web-app/docker-compose.yml', 'up', '&']
 
 - name: 'gcr.io/cloud-builders/docker'
   args: ['exec', 'docker-node-mongo', 'curl', 'http://localhost:3000']
