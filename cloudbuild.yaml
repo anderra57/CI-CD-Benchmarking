@@ -14,9 +14,5 @@ steps:
   args: ['-f', 'CI-CD-Benchmarking/web-app/docker-compose.yml', 'up', '-d']
 
 - name: 'gcr.io/cloud-builders/docker'
-  entrypoint: /bin/sh
-  args:
-  - '-c'
-  - |
-    export id=$(docker ps -qf "name=docker-node-mongo") && \
-    docker exec -it $(docker ps -qf "name=docker-node-mongo") curl localhost:3000
+  entrypoint: 'bash'
+  args: ['-c', 'docker exec -it $(docker ps -qf "name=docker-node-mongo") curl localhost:3000']
