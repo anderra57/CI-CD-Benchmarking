@@ -12,3 +12,10 @@ steps:
 
 - name: 'gcr.io/cloud-builders/docker'
   args: ['exec', 'docker-node-mongo', 'curl', 'http://localhost:3000']
+
+- name: 'gcr.io/cloud-builders/git'
+  entrypoint: /bin/sh
+  args:
+  - '-c'
+  - |
+    curl http://localhost:3000
