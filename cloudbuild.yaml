@@ -11,11 +11,7 @@ steps:
     ls
 
 - name: 'docker/compose:1.19.0'
-  args: ['-f', 'CI-CD-Benchmarking/web-app/docker-compose.yml', 'up']
+  args: ['-f', 'CI-CD-Benchmarking/web-app/docker-compose.yml', 'up', '-d']
 
-- name: 'gcr.io/cloud-builders/git'
-  entrypoint: /bin/sh
-  args:
-  - '-c'
-  - |
-    uname -a
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['exec', '-it', '$(docker ps -qf "name=docker-node-mongo")', 'curl', 'localhost:3000']
