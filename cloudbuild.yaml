@@ -11,4 +11,4 @@ steps:
   args: ['-f', 'CI-CD-Benchmarking/web-app/docker-compose.yml', 'up', '-d']
 
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['exec', 'docker-node-mongo', 'ip', 'a']
+  args: ['exec', 'docker-node-mongo', 'curl', 'http://172.18.0.2:3000']
