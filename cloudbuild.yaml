@@ -7,4 +7,4 @@ steps:
     - INSTANCE_ARGS=--image-project cos-cloud --image-family cos-stable
     - USERNAME=cloud-user
     # Run a script from the local build context in a Docker container
-    - COMMAND=docker run -v "$(pwd):/tmp" -w "/tmp" docker:git git clone https://github.com/adeiarias/CI-CD-Benchmarking.git;cd CI-CD-Benchmarking;docker run -v "$(pwd):/tmp" -v /var/run/docker.sock:/var/run/docker.sock -w "/tmp" tiangolo/docker-with-compose docker-compose -f web-app/docker-compose.yml up --build
+    - COMMAND=docker run -v "$(pwd):/tmp" -w "/tmp" docker:git git clone https://github.com/adeiarias/CI-CD-Benchmarking.git;cd CI-CD-Benchmarking;docker run -v "$(pwd):/tmp" -v /var/run/docker.sock:/var/run/docker.sock -w "/tmp" tiangolo/docker-with-compose docker-compose -f web-app/docker-compose.yml up --build -d;docker logs docker-node-mongo;curl http://localhost:3000
