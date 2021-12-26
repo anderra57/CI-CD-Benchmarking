@@ -2,4 +2,4 @@ steps:
    # Clone a public repo and write its revision to a VERSION file.
 - name: gcr.io/$PROJECT_ID/remote-builder
   env:
-    - COMMAND=git --version
+    - COMMAND=docker -v
