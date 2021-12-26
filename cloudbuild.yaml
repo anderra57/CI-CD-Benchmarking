@@ -1,5 +1,10 @@
 steps:
-   # Clone a public repo and write its revision to a VERSION file.
-- name: gcr.io/$PROJECT_ID/remote-builder
+- name: gcr.io/cloud-solutions-images/remote-builder:v0.3.1
+  waitFor: ["-"]
   env:
-    - COMMAND=docker -v
+    # Use Container Optimized OS
+    # https://cloud.google.com/container-optimized-os/docs/
+    - INSTANCE_ARGS=--image-project cos-cloud --image-family cos-stable
+    - USERNAME=cloud-user
+    # Run a script from the local build context in a Docker container
+    - COMMAND=docker run docker:git git --version
