@@ -1,17 +1,5 @@
 steps:
    # Clone a public repo and write its revision to a VERSION file.
-- name: 'gcr.io/cloud-builders/git'
-  entrypoint: /bin/sh
-  args:
-  - '-c'
-  - |
-    git clone https://github.com/adeiarias/CI-CD-Benchmarking.git
-    
-- name: 'docker/compose:1.19.0'
-  args: ['-f', 'CI-CD-Benchmarking/web-app/docker-compose.yml', 'up', '-d']
-
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['logs', 'docker-node-mongo']
-
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['exec', 'docker-node-mongo', 'test_scripts/testing.sh']
+- name: gcr.io/$PROJECT_ID/remote-builder
+  env:
+    - COMMAND=ls -la
