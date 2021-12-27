@@ -12,5 +12,5 @@ steps:
       "plasma-ripple-312206",
       "--",
       "sudo",
-      "./deployment.sh",
+      "ls -al",
     ]
