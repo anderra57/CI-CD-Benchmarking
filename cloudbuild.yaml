@@ -12,5 +12,5 @@ steps:
       "plasma-ripple-312206",
       "--",
       "sudo",
-      "ls -al",
+      "ls /home",
     ]
