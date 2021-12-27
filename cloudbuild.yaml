@@ -1,32 +1,3 @@
 steps:
-# CI
-# Clone repository
-- name: 'gcr.io/cloud-builders/git'
-  entrypoint: /bin/sh
-  args:
-  - '-c'
-  - |
-    git clone https://github.com/adeiarias/CI-CD-Benchmarking.git
-
-# Build docker-compose file
-- name: 'docker/compose:1.19.0'
-  args: ['-f', 'CI-CD-Benchmarking/web-app/docker-compose.yml', 'up', '-d']
-
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['logs', 'docker-node-mongo']
-
-# Execute test scripts
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['exec', 'docker-node-mongo', 'test_scripts/testing.sh']
-
-# CD
-# Upload to production
-- name: gcr.io/$PROJECT_ID/remote-builder
-  waitFor: ["-"]
-  env:
-    # Use Container Optimized OS
-    # https://cloud.google.com/container-optimized-os/docs/
-    - INSTANCE_ARGS=--image-project cos-cloud --image-family cos-stable
-    - USERNAME=cloud-user
-    # Run a script from the local build context in a Docker container
-    - COMMAND=docker run -v "$(pwd):/tmp" -w "/tmp" docker:git git clone https://github.com/adeiarias/CI-CD-Benchmarking.git;cd CI-CD-Benchmarking;docker run -v "$(pwd):/tmp" -v /var/run/docker.sock:/var/run/docker.sock -w "/tmp" tiangolo/docker-with-compose docker-compose -f web-app/docker-compose.yml up -d --build;docker exec docker-node-mongo ls -al;docker exec docker-node-mongo curl http://localhost:3000
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['beta', 'compute', 'ssh', '--zone' '"us-central1-a"', 'gbuild', '--project', '"plasma-ripple-312206"', '--', 'sudo', './deployment.sh']
