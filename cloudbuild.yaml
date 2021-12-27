@@ -1,3 +1,16 @@
 steps:
-- name: 'gcr.io/cloud-builders/gcloud'
-  args: ['beta', 'compute', 'ssh', '--zone' '"us-central1-a"', 'gbuild', '--project', '"plasma-ripple-312206"', '--', 'sudo', './deployment.sh']
+- name: "gcr.io/cloud-builders/gcloud"
+  args:
+    [
+      "beta",
+      "compute",
+      "ssh",
+      "--zone",
+      "us-central1-a",
+      "gbuild",
+      "--project",
+      "plasma-ripple-312206",
+      "--",
+      "sudo",
+      "./deployment.sh",
+    ]
