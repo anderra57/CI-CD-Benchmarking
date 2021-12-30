@@ -19,8 +19,7 @@ const Item = require("./models/Item");
 
 // VULNERABLE METHOD //
 app.get('/app/:message', (req, res) => {
-  const message = req.params.message.replace(/[^a-zA-Z0-9]/g, '');
-  console.log(message);
+  const message = req.params.message;
   exec(`/usr/bin/echo ${message}`, {timeout: 5000}, (error, stdout) => {
     if (error) return res.status(500).end();
     res.type('txt').send(stdout).end();
