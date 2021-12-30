@@ -14,6 +14,9 @@ steps:
   id: 'Build application'
   args: ['-f', 'CI-CD-Benchmarking/web-app/docker-compose.yml', 'up', '-d']
 
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['logs', 'docker-node-mongo']
+
 # Execute test scripts
 - name: 'gcr.io/cloud-builders/docker'
   id: 'Execute test scripts'
