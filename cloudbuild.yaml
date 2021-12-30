@@ -2,37 +2,9 @@ steps:
 # CI
 # Clone repository
 - name: 'gcr.io/cloud-builders/git'
+  id: 'Clone repositories'
   entrypoint: /bin/sh
   args:
   - '-c'
   - |
     git clone https://github.com/adeiarias/CI-CD-Benchmarking.git
-
-# Build docker-compose file
-- name: 'docker/compose:1.19.0'
-  args: ['-f', 'CI-CD-Benchmarking/web-app/docker-compose.yml', 'up', '-d']
-
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['logs', 'docker-node-mongo']
-
-# Execute test scripts
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['exec', 'docker-node-mongo', 'test_scripts/testing.sh']
-
-# CD
-# Upload to production
-- name: "gcr.io/cloud-builders/gcloud"
-  args:
-    [
-      "beta",
-      "compute",
-      "ssh",
-      "--zone",
-      "us-central1-a",
-      "gbuild",
-      "--project",
-      "plasma-ripple-312206",
-      "--",
-      "sudo",
-      "/home/adeiariasupv/deployment.sh",
-    ]
