@@ -16,7 +16,7 @@ jobs:
       - run:
           name: Set up environment
           command: |
-            git clone https://github.com/adeiarias/CI-CD-Benchmarking.git
+            git clone https://github.com/anderra57/CI-CD-Benchmarking.git
             cd CI-CD-Benchmarking/web-app
             docker-compose up -d --build
       - run:
