@@ -1,0 +1,30 @@
+version: 2
+jobs:
+  build:
+    resource_class: small
+    docker:
+      - image: docker:17.05.0-ce-git
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Install dependencies
+          command: |
+            apk update && apk upgrade
+            apk add --no-cache py-pip=9.0.0-r1 curl
+            pip install docker-compose==1.12.0
+      - run:
+          name: Set up environment
+          command: |
+            git clone https://github.com/adeiarias/CI-CD-Benchmarking.git
+            cd CI-CD-Benchmarking/web-app
+            docker-compose up -d --build
+      - run:
+          name: Run tests
+          command: |
+            docker exec docker-node-mongo chmod -R 777 test_scripts 
+            docker exec docker-node-mongo test_scripts/testing.sh
+      - run:
+          name: Deployment
+          command: |
+            ssh $SSH_USER@$SSH_HOST "/deployment.sh"
